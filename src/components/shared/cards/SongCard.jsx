@@ -1,30 +1,16 @@
-import CoverImageEmpty from "../../../assets/images/card_cover_image.jpg";
-import CheckIcon from "../../../assets/icons/check.svg";
-import UnCheckIcon from "../../../assets/icons/un-check.svg";
-
-const SongCard = ({ song, selectedSongs, onToggleSelect }) => {
+const SongCard = ({ song }) => {
   return (
-    <div className="flex items-center relative bg-white border border-gray-200 rounded-2xl overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer">
-      {/* Checkbox top-right */}
-      <div className="absolute top-2 left-2 z-10">
-        {selectedSongs.includes(song._id) ? (
-          <img src={CheckIcon} onClick={() => onToggleSelect(song._id)} />
-        ) : (
-          <img src={UnCheckIcon} onClick={() => onToggleSelect(song._id)} />
-        )}
-      </div>
+    <div className="bg-white rounded-2xl overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer">
       <div className="relative">
         <img
-          src={song.coverImage ? song.coverImage : CoverImageEmpty}
+          src={song.coverImage ? song.coverImage : "https://media.istockphoto.com/id/1324638796/vector/realistic-vinyl-disc-mockup-in-empty-blank-music-album-cover-isolated-on-white-background.jpg?s=612x612&w=0&k=20&c=kHlrs3SspeLp7hfoZ9MCZceDoAnnLnnIayFGwznlCAI=" }
           alt={song.title}
-          className="w-20 h-20 object-cover transition-opacity duration-300 hover:opacity-90"
+          className="w-full h-64 object-cover transition-opacity duration-300 hover:opacity-90"
         />
       </div>
-      <div className="p-3">
+      <div className="py-3">
         <h3 className="text-xl font-bold text-black truncate">{song.title}</h3>
-        <p className="text-gray-600 text-sm mt-1">
-          {song.artist ? song.artist : "Unknown"}
-        </p>
+        <p className="text-gray-600 text-sm mt-1">{song.artist ? song.artist : "Unknown" }</p>
 
         <div className="flex flex-wrap gap-2 mt-3">
           {song.genres.map((g, idx) => (

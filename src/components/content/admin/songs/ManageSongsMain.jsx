@@ -6,11 +6,53 @@ import { ADMIN_ADD_SONG_PATH, ADMIN_EDIT_SONG_PATH } from "../../../../constants
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import config from "../../../../config/api";
-import coverImage from "../../../../assets/images/card_cover_image.jpg"
 
 const ManageSongsMain = () => {
   const [songs, setSongs] = useState([
-    
+    {
+      _id: 1,
+      title: "Shape of You",
+      artist: "Ed Sheeran",
+      coverImage:
+        "https://upload.wikimedia.org/wikipedia/en/4/45/Divide_cover.png",
+      genres: ["Pop"],
+      venueTypes: ["Pub", "Cafe"],
+    },
+    {
+      _id: 2,
+      title: "Smells Like Teen Spirit",
+      artist: "Nirvana",
+      coverImage:
+        "https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg",
+      genres: ["Rock", "Grunge"],
+      venueTypes: ["Club", "Concert Hall"],
+    },
+    {
+      _id: 3,
+      title: "Uptown Funk",
+      artist: "Mark Ronson ft. Bruno Mars",
+      coverImage:
+        "https://i1.sndcdn.com/artworks-000500637585-bkne8w-t500x500.jpg",
+      genres: ["Funk", "Pop"],
+      venueTypes: ["Club", "Pub"],
+    },
+    {
+      _id: 4,
+      title: "Rolling in the Deep",
+      artist: "Adele",
+      coverImage: "https://i.ytimg.com/vi/NGzNIAzprdc/hqdefault.jpg",
+      genres: ["Pop", "Soul"],
+      venueTypes: ["Cafe", "Pub"],
+    },
+    {
+      _id: 5,
+      title: "Hotel California",
+      artist: "Eagles",
+      coverImage:
+        "https://upload.wikimedia.org/wikipedia/en/4/49/Hotelcalifornia.jpg",
+      genres: ["Rock"],
+      venueTypes: ["Pub", "Lounge"],
+    },
   ]);
   const [loading, setLoading] = useState(false);
 
@@ -87,7 +129,7 @@ const ManageSongsMain = () => {
                         <div className="flex items-center gap-4">
                           <div className="w-16 h-16 rounded-xl overflow-hidden shadow-md">
                             <img
-                              src={song.coverImage ? song.coverImage:coverImage}
+                              src={song.coverImage}
                               alt={song.title}
                               className="w-full h-full object-cover"
                             />
