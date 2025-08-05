@@ -16,7 +16,7 @@ const AdminNavbar = () => {
   return (
     <nav className="sticky top-0 z-10 px-4 py-3 h-[60px] bg-purple-50 border-b-2 border-purple-100">
       <div className="flex items-center justify-between">
-        <Link to={ADMIN_ADD_SONG_PATH}>
+        <Link to={HOME_PATH}>
           <img src={Logo} alt="Online ICT Logo" className="w-[150px]" />
         </Link>
         {/* {user.name && (

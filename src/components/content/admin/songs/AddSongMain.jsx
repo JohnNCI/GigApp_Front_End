@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   GENRES_OPTIONS,
   VENUE_TYPES_OPTIONS,
@@ -8,6 +8,8 @@ import TypeOrSelect from "../../../shared/fields/TypeOrSelect";
 import PageHeader from "../../../shared/headers/PageHeader";
 import FormInput from "../../../shared/fields/FormInput";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import config from "../../../../config/api";
 
 const initialState = {
   title: "",
@@ -23,6 +25,30 @@ const initialState = {
 const AddSongMain = () => {
   const [form, setForm] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
+  const { id } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`${config.API_URL}/songs/${id}`)
+      .then((res) => {
+        setForm({
+          title: res.data.title,
+          artist: res.data.artist,
+          coverImage: res.data.coverImage,
+          genres: res.data.genres.map((genre) => ({
+            label: genre,
+            value: genre,
+          })),
+          venueTypes: res.data.venueTypes.map((venue) => ({
+            label: venue,
+            value: venue,
+          })),
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,23 +95,43 @@ const AddSongMain = () => {
     if (!isValid()) return;
     setIsLoading(true);
 
-    axios
-      .post(`http://localhost:3000/api/songs`, {
-        title: form.title,
-        artist: form.artist,
-        coverImage: form.coverImage,
-        genres: form.genres.map((el) => el.value),
-        venueTypes: form.venueTypes.map((el) => el.value),
-      })
-      .then((res) => {
-        setIsLoading(false);
-        handleReset()
-        console.log(res.data);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.log(err);
-      });
+    if (id) {
+      axios
+        .put(`${config.API_URL}/songs/${id}`, {
+          title: form.title,
+          artist: form.artist,
+          coverImage: form.coverImage,
+          genres: form.genres.map((el) => el.value),
+          venueTypes: form.venueTypes.map((el) => el.value),
+        })
+        .then((res) => {
+          setIsLoading(false);
+          handleReset();
+          console.log(res.data);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          console.log(err);
+        });
+    } else {
+      axios
+        .post(`${config.API_URL}/songs`, {
+          title: form.title,
+          artist: form.artist,
+          coverImage: form.coverImage,
+          genres: form.genres.map((el) => el.value),
+          venueTypes: form.venueTypes.map((el) => el.value),
+        })
+        .then((res) => {
+          setIsLoading(false);
+          handleReset();
+          console.log(res.data);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          console.log(err);
+        });
+    }
   };
 
   const handleReset = () => {
@@ -94,7 +140,7 @@ const AddSongMain = () => {
 
   return (
     <>
-      <PageHeader title={"Add song"} />
+      <PageHeader title={id ? "Edit song" : "Add song"} />
       <div>
         <form className="flex w-[50%] flex-col gap-6">
           <FormInput
